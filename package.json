@@ -10,7 +10,8 @@
     "test": "jest",
     "dev": "next",
     "build": "next build",
-    "start": "next start"
+    "start": "next start -p $PORT",
+    "heroku-postbuild": "next build"
   },
   "repository": "https://github.com/noriaki/d3594-map",
   "author": {
