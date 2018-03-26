@@ -1,5 +1,6 @@
 import React from 'react';
 
+import withMaterialUI from '../containers/withMaterialUI';
 import PointsEditor from '../containers/PointsEditor';
 
 const IndexPage = () => (
@@ -11,4 +12,4 @@ const IndexPage = () => (
   </div>
 );
 
-export default IndexPage;
+export default withMaterialUI(IndexPage);
