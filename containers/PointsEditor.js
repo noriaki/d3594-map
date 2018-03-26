@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
-import InputPoints from '../components/InputPoints';
+import Input, { InputLabel } from 'material-ui/Input';
+import { FormControl } from 'material-ui/Form';
 
 class PointsEditor extends Component {
   static propTypes = {
@@ -13,20 +13,22 @@ class PointsEditor extends Component {
     y: 0,
   }
   state = {
-    x: this.props.x,
-    y: this.props.y,
+    value: `(${this.props.x},${this.props.y})`,
   }
 
-  handleChange = axis => (event) => {
+  handleChange = (event) => {
     const { value } = event.currentTarget;
-    this.setState({ [axis]: value });
+    this.setState({ value });
   }
 
   render = () => (
-    <InputPoints
-      x={this.state.x}
-      y={this.state.y}
-      onChange={this.handleChange} />
+    <FormControl>
+      <InputLabel htmlFor="points">座標(x,y)</InputLabel>
+      <Input
+        id="points"
+        value={this.state.value}
+        onChange={this.handleChange} />
+    </FormControl>
   )
 }
 
