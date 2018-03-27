@@ -1,32 +1,44 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Input, { InputLabel } from 'material-ui/Input';
+import { FormControl } from 'material-ui/Form';
 
-import InputPoints from '../components/InputPoints';
+import extractPoint from '../libs/extractPoint';
 
 class PointsEditor extends Component {
   static propTypes = {
+    id: PropTypes.string.isRequired,
     x: PropTypes.number,
     y: PropTypes.number,
+    onUpdatePoint: PropTypes.func,
   }
   static defaultProps = {
     x: 0,
     y: 0,
+    onUpdatePoint: () => {},
   }
   state = {
-    x: this.props.x,
-    y: this.props.y,
+    value: `(${this.props.x},${this.props.y})`,
   }
 
-  handleChange = axis => (event) => {
+  handleChange = (event) => {
     const { value } = event.currentTarget;
-    this.setState({ [axis]: value });
+    const point = extractPoint(value);
+    this.setState({ value, point });
+    if (point) { this.props.onUpdatePoint(point); }
   }
 
   render = () => (
-    <InputPoints
-      x={this.state.x}
-      y={this.state.y}
-      onChange={this.handleChange} />
+    <FormControl>
+      <InputLabel htmlFor={this.props.id}>座標(x,y)</InputLabel>
+      <Input
+        id={this.props.id}
+        value={this.state.value}
+        onChange={this.handleChange} />
+      <p>
+        { this.state.point && `${this.state.point.x},${this.state.point.y}` }
+      </p>
+    </FormControl>
   )
 }
 
